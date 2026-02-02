@@ -1,5 +1,29 @@
 # 常驻 layout 侧边栏分析
 
+## 个人分析
+
+本质上是layout作为整个后台项目的固定常驻内容，那么肯定作为App首页需要作为Router-view导入的，那么页面内的具体内容就是作为这个常驻内容的子容器，所以layout本质上一定包含了AppMain的子组件存在子Router-view，在router配置中通过下属方式配置，children模板会在layout内的router-view中渲染。
+所以layout才是最主要的入口界面！
+``` js
+{
+    path: "/",
+    component: Layouts,
+    redirect: "/dashboard",
+    children: [
+      {
+        path: "dashboard",
+        component: () => import("@/pages/dashboard/index.vue"),
+        name: "Dashboard",
+        meta: {
+          title: "首页",
+          svgIcon: "dashboard",
+          affix: true
+        }
+      }
+    ]
+  },
+```
+
 ## 结论
 
 `layouts/index.vue` 会常驻在页面中，是因为它被配置为多个一级路由的父组件，子页面内容通过嵌套路由的 `<router-view>` 渲染到布局内部。路由切换时只替换子组件，布局组件本身不卸载，因此侧边栏等结构保持常驻。

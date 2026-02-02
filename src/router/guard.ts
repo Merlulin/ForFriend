@@ -8,8 +8,10 @@ import { useUserStore } from "@/pinia/stores/user"
 import { routerConfig } from "@/router/config"
 import { isWhiteList } from "@/router/whitelist"
 
+// NProgress用于配置路由切换的加载进度条
 NProgress.configure({ showSpinner: false })
 
+// 守卫拦截路由，统一所有页面进入都会加载useTitle
 const { setTitle } = useTitle()
 
 const LOGIN_PATH = "/login"
